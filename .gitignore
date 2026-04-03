@@ -1,0 +1,18 @@
+# IDE 配置文件
+.idea/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+
+# 编译输出
+target/
+out/
+*.class
+
+# 日志文件
+*.log
+
+# Maven / Gradle 包装器（可选，如果你想保留就注释掉）
+.mvn/
+gradle/
