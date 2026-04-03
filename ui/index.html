@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java 后端试验场 - 前端调用</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>⚙️ Java 后端试验场</h1>
+        <div class="card">
+            <label>输入你的名字：</label>
+            <input type="text" id="nameInput" placeholder="例如：张三">
+            <button id="sendBtn">发送请求</button>
+        </div>
+        <div id="responseArea" class="response">
+            等待请求...
+        </div>
+        <hr>
+        <p class="note">💡 后端 API: <code>GET http://localhost:8080/api/hello?name=xxx</code></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
