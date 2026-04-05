@@ -1,3 +1,4 @@
+/* 基础页面样式 */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #f5f7fa;
@@ -5,6 +6,7 @@ body {
     padding: 20px;
 }
 
+/* 主容器样式 */
 .container {
     max-width: 600px;
     margin: 0 auto;
@@ -14,16 +16,19 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* 标题样式 */
 h1 {
     color: #2c3e50;
     border-left: 5px solid #3498db;
     padding-left: 15px;
 }
 
+/* 卡片组件样式 */
 .card {
     margin: 20px 0;
 }
 
+/* 输入框和按钮通用样式 */
 input,
 button {
     padding: 10px;
@@ -33,6 +38,7 @@ button {
     border: 1px solid #ccc;
 }
 
+/* 按钮样式 */
 button {
     background-color: #3498db;
     color: white;
@@ -40,10 +46,12 @@ button {
     cursor: pointer;
 }
 
+/* 按钮悬停效果 */
 button:hover {
     background-color: #2980b9;
 }
 
+/* 响应内容显示区域 */
 .response {
     background: #ecf0f1;
     padding: 15px;
@@ -52,6 +60,7 @@ button:hover {
     white-space: pre-wrap;
 }
 
+/* 备注文字样式 */
 .note {
     font-size: 0.85rem;
     color: #7f8c8d;

@@ -1,27 +1,41 @@
+<!-- HTML文档声明 -->
 <!DOCTYPE html>
+<!-- 设置页面语言为中文 -->
 <html lang="zh-CN">
 
 <head>
+    <!-- 字符编码设置 -->
     <meta charset="UTF-8">
+    <!-- 视口设置，支持响应式布局 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 页面标题 -->
     <title>Java 后端试验场 - 前端调用</title>
+    <!-- 引入样式文件 -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <!-- 主容器 -->
     <div class="container">
+        <!-- 页面标题 -->
         <h1>⚙️ Java 后端试验场</h1>
+        <!-- 输入卡片区域 -->
         <div class="card">
             <label>输入你的名字：</label>
+            <!-- 名字输入框 -->
             <input type="text" id="nameInput" placeholder="例如：张三">
+            <!-- 发送请求按钮 -->
             <button id="sendBtn">发送请求</button>
         </div>
+        <!-- 响应结果显示区域 -->
         <div id="responseArea" class="response">
             等待请求...
         </div>
         <hr>
+        <!-- API说明提示 -->
         <p class="note">💡 后端 API: <code>GET http://localhost:8080/api/hello?name=xxx</code></p>
     </div>
+    <!-- 引入JavaScript脚本 -->
     <script src="script.js"></script>
 </body>
 
