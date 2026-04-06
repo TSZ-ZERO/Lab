@@ -1,13 +1,13 @@
 @echo off
 chcp 65001 >nul
 echo ========================================
-echo   启动 Vue Lab 前端开发服务器
+echo   Start Vue Lab Frontend
 echo ========================================
 echo.
 cd /d "%~dp0vue-lab"
-echo 当前目录: %cd%
+echo Current directory: %cd%
 echo.
-echo 正在启动开发服务器...
+echo Starting dev server...
 echo.
 npm run dev
 pause

@@ -1,5 +1,4 @@
 package com.tsz.myblog.controller;
-
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
@@ -9,6 +8,7 @@ import java.util.*;
  */
 @RestController  // 标识为 REST 控制器，返回 JSON 数据
 @RequestMapping("/api")  // 所有接口的公共路径前缀
+//@CrossOrigin(origins = {"http://127.0.0.1:5500", "http://localhost:5173"})作用：允许指定来源的请求访问该接口
 public class ApiController {
 
     /**
