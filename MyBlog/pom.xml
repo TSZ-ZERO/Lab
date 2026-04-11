@@ -30,23 +30,50 @@
         <java.version>17</java.version>
     </properties>
     <dependencies>
+        <!--Spring Boot Web 开发的核心依赖
+        包含：Spring MVC 框架内嵌  Tomcat 服务器   RESTful API 支持
+             JSON 处理(Jackson)    数据验证(Validation)-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
+        <!--开发工具,提升开发体验
+        功能：热部署: 代码修改后自动重启应用
+             自动刷新: 浏览器自动刷新(LiveReload)
+             禁用缓存: 模板引擎缓存自动禁用
+             额外配置属性: 提供开发环境的便利配置-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+        <!--Spring Boot 测试依赖包
+        功能：1.JUnit 5 - 单元测试框架 2.Mockito - Mock 对象框架
+            3.AssertJ - 流式断言库 4.Hamcrest - 匹配器库 5.Spring Test - Spring 测试支持-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <!--作用: Java 代码简化工具库,通过注解自动生成样板代码
+        核心功能: @Data - 自动生成 getter/setter/toString/equals/hashCode
+                 @Getter/@Setter - 单独生成访问器方法
+                 @NoArgsConstructor/@AllArgsConstructor - 生成构造方法
+                 @Builder - 实现建造者模式
+                 @Slf4j - 自动注入日志对象
+                 @ToString - 生成 toString() 方法
+                 @EqualsAndHashCode - 生成 equals() 和 hashCode()-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--作用: API 文档自动生成工具(Swagger/OpenAPI 3)
+        功能: 1.自动生成 API 文档 2.自动生成接口测试用例 3.自动生成 Postman 集合
+        4.基于注解生成文档(@Operation, @Parameter 等)
+        5.访问地址通常是: http://localhost:8080/swagger-ui.html
+        -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>

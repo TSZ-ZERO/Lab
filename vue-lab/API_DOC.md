@@ -6,6 +6,24 @@
 - **数据格式**: JSON
 - **认证方式**: Bearer Token (登录后获取)
 
+vue-lab/src/
+├── layouts/
+│   └── MainLayout.vue     # 主布局组件（含侧边导航栏）
+├── router/
+│   └── index.ts           # 路由配置
+├── stores/
+│   └── user.ts            # 用户状态管理
+├── types/
+│   └── index.ts           # TypeScript 类型定义
+├── views/
+│   ├── Login.vue          # 登录页面
+│   ├── Dashboard.vue      # 数据总览模块
+│   ├── WriteBlog.vue      # 撰写博客模块
+│   ├── BlogList.vue       # 查看博客模块（含排序功能）
+│   └── ApiTest.vue        # 其它测试接口模块
+├── App.vue                # 根组件
+├── main.ts                # 入口文件
+└── style.css              # 全局样式
 ---
 
 ## 目录
