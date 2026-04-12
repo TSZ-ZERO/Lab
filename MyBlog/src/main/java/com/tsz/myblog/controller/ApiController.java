@@ -1,5 +1,10 @@
 package com.tsz.myblog.controller;
+import com.tsz.myblog.pojo.dto.CreateBlogDTO;
+import com.tsz.myblog.pojo.result.Result;
+import com.tsz.myblog.pojo.vo.CreateBlogVO;
+import com.tsz.myblog.service.CreateBlogService;
 import com.tsz.myblog.service.FindRepeatNumbers;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
@@ -10,10 +15,13 @@ import java.util.*;
  */
 @RestController  // 标识为 REST 控制器，返回 JSON 数据
 @RequestMapping("/api")  // 所有接口的公共路径前缀
+@Slf4j
 //@CrossOrigin(origins = {"http://127.0.0.1:5500", "http://localhost:5173"})作用：允许指定来源的请求访问该接口
 public class ApiController {
     @Autowired
     private FindRepeatNumbers findRepeatNumbers;
+    @Autowired
+    private CreateBlogService createBlogService;
 
     /**
      * 问候接口
@@ -51,5 +59,17 @@ public class ApiController {
         res.put("count", duplicates.size());      // 重复数量
         res.put("serverTime", System.currentTimeMillis());  // 服务器时间戳
         return res;
+    }
+
+    /**
+     * 创建博客接口
+     * POST /api/blogs
+     */
+    @PostMapping("/blogs")
+    public Result createBlog(@RequestBody CreateBlogDTO createBlogDTO){
+        log.info("createBlogDTO: {}", createBlogDTO);
+        CreateBlogVO createBlogVO = createBlogService.createBlog(createBlogDTO);
+        log.info("createBlogVO: {}", createBlogVO);
+        return Result.success(createBlogVO);
     }
 }
