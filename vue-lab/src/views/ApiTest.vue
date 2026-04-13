@@ -19,7 +19,7 @@ async function sendRequest() {
   serverTime.value = ''
 
   try {
-    const res = await fetch(`/api/hello?name=${encodeURIComponent(name.value)}`)
+    const res = await fetch(`/api/test/hello?name=${encodeURIComponent(name.value)}`)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const data = await res.json()
     message.value = data.message
@@ -42,7 +42,7 @@ async function findDuplicates() {
       .map(s => parseInt(s.trim()))
       .filter(n => !isNaN(n))
 
-    const res = await fetch('/api/findDuplicates', {
+    const res = await fetch('/api/test/findDuplicates', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(nums)
