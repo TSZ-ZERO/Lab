@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.tsz.myblog.mapper.CreateBlogMapper">
-    <insert id="Insert">
-        INSERT INTO blog(id, title, content, author, word_count, create_time)
-        VALUES (#{id}, #{title}, #{content}, #{author}, #{wordCount}, #{createTime});
-    </insert>
-</mapper>

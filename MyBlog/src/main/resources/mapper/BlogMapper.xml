@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tsz.myblog.mapper.BlogMapper">
+    <resultMap id="BlogResultMap" type="com.tsz.myblog.pojo.entity.CreateBlogEntity">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="author" column="author"/>
+        <result property="wordCount" column="word_count"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <insert id="InsertBlog">
+        INSERT INTO blog(id, title, content, author, word_count, create_time)
+        VALUES (#{id}, #{title}, #{content}, #{author}, #{wordCount}, #{createTime});
+    </insert>
+    <!-- 错误写法<select id="getBlogList" resultType="com.tsz.myblog.pojo.vo.GetBlogListVO">-->
+    <select id="getBlogList" resultMap="BlogResultMap">
+        SELECT * FROM blog;
+    </select>
+</mapper>

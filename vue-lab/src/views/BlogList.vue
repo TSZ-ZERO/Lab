@@ -43,7 +43,10 @@ async function fetchBlogs() {
   try {
     const res = await fetch('/api/blogs')
     if (res.ok) {
-      blogs.value = await res.json()
+      //blogs.value = await res.json()
+      //不能直接将整个后端返回的响应体赋给blogs，只需要赋data就行了，code及message都不需要
+      const json = await res.json()
+      blogs.value = json.data || []
     }
   } catch (e) {
     blogs.value = [
