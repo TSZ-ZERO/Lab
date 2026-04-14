@@ -2,9 +2,8 @@ package com.tsz.myblog.service.impl;
 
 import com.tsz.myblog.mapper.BlogMapper;
 import com.tsz.myblog.pojo.dto.CreateBlogDTO;
-import com.tsz.myblog.pojo.entity.CreateBlogEntity;
+import com.tsz.myblog.pojo.entity.BlogEntity;
 import com.tsz.myblog.pojo.vo.CreateBlogVO;
-import com.tsz.myblog.pojo.vo.GetBlogListVO;
 import com.tsz.myblog.service.BlogService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +20,17 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public CreateBlogVO createBlog(CreateBlogDTO createBlogDTO) {
-        CreateBlogEntity createBlogEntity = new CreateBlogEntity();
+        BlogEntity blogEntity = new BlogEntity();
         //使用Hutool包的属性拷贝， 将 DTO 转换为实体
-        BeanUtils.copyProperties(createBlogDTO, createBlogEntity);
+        BeanUtils.copyProperties(createBlogDTO, blogEntity);
         //设置博客UUID
-        createBlogEntity.setId(UUID.randomUUID().toString());
+        blogEntity.setId(UUID.randomUUID().toString());
         //设置博客创建时间
-        createBlogEntity.setCreateTime(LocalDateTime.now());
+        blogEntity.setCreateTime(LocalDateTime.now());
         //传到DAO层持久化到数据库
-        blogMapper.InsertBlog(createBlogEntity);
+        blogMapper.InsertBlog(blogEntity);
         CreateBlogVO createBlogVO = new CreateBlogVO();
-        BeanUtils.copyProperties(createBlogEntity, createBlogVO);
+        BeanUtils.copyProperties(blogEntity, createBlogVO);
         return createBlogVO;
     }
 
@@ -44,8 +43,17 @@ public class BlogServiceImpl implements BlogService {
         List<CreateBlogEntity> blogList = blogMapper.getBlogList();
         getBlogListVO.setBlogList(blogList);
         return getBlogListVO; */
+
+    /**
+     * 获取博客列表
+     * @return
+     */
     @Override
-    public List<CreateBlogEntity> getBlogList() {
+    public List<BlogEntity> getBlogList() {
         return blogMapper.getBlogList();
+    }
+    @Override
+    public BlogEntity getBlogById(String id){
+        return blogMapper.getBlogById(id);
     }
 }

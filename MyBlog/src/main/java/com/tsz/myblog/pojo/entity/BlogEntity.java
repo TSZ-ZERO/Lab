@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class CreateBlogEntity {
+public class BlogEntity {
     private String title;
     private String content;
     private String author;

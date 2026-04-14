@@ -7,9 +7,30 @@ type SortOrder = 'asc' | 'desc'
 
 const blogs = ref<Blog[]>([])
 const loading = ref(false)
+
 const sortBy = ref<SortType>('date')
 const sortOrder = ref<SortOrder>('desc')
+
 const searchKeyword = ref('')
+
+const showDeleteModal = ref(false)
+const pendingDeleteId = ref<number | null>(null)
+  
+const showDetailModal = ref(false)
+const currentBlog = ref<Blog | null>(null)
+
+async function fetchBlogById(id: number) {
+  try {
+    const res = await fetch(`/api/blogs/${id}`)
+    if (res.ok) {
+      const json = await res.json()
+      currentBlog.value = json.data
+      showDetailModal.value = true
+    }
+  } catch (e) {
+    console.error('获取博客详情失败', e)
+  }
+}
 
 const sortedBlogs = computed(() => {
   let result = [...blogs.value]
@@ -61,6 +82,31 @@ async function fetchBlogs() {
   }
 }
 
+function confirmDelete(id: number) {
+  pendingDeleteId.value = id
+  showDeleteModal.value = true
+}
+
+async function executeDelete() {
+  if (pendingDeleteId.value === null) return
+  const id = pendingDeleteId.value
+  showDeleteModal.value = false
+  pendingDeleteId.value = null
+  try {
+    const res = await fetch(`/api/blogs/${id}`, { method: 'DELETE' })
+    if (res.ok) {
+      blogs.value = blogs.value.filter(blog => blog.id !== id)
+    }
+  } catch (e) {
+    console.error('删除失败', e)
+  }
+}
+
+function cancelDelete() {
+  showDeleteModal.value = false
+  pendingDeleteId.value = null
+}
+
 function toggleSortOrder() {
   sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
 }
@@ -100,7 +146,10 @@ onMounted(() => {
     </div>
     <div v-else class="blogs-container">
       <div v-for="blog in sortedBlogs" :key="blog.id" class="blog-card">
-        <h2 class="blog-title">{{ blog.title }}</h2>
+        <div class="blog-header">
+          <h2 @click="fetchBlogById(blog.id!)" class="blog-title">{{ blog.title }}</h2>
+          <button @click="confirmDelete(blog.id!)" class="delete-btn">删除</button>
+        </div>
         <div class="blog-meta">
           <span>作者: {{ blog.author }}</span>
           <span>字数: {{ blog.wordCount }}</span>
@@ -109,6 +158,36 @@ onMounted(() => {
         <p class="blog-content">{{ blog.content }}</p>
       </div>
     </div>
+
+    <Teleport to="body">
+      <div v-if="showDeleteModal" class="modal-overlay" @click.self="cancelDelete">
+        <div class="modal-content">
+          <h3>确认删除</h3>
+          <p>确定要删除这篇博客吗？</p>
+          <div class="modal-buttons">
+            <button @click="cancelDelete" class="cancel-btn">取消</button>
+            <button @click="executeDelete" class="confirm-btn">确定</button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
+
+    <Teleport to="body">
+      <div v-if="showDetailModal" class="modal-overlay" @click.self="showDetailModal = false">
+        <div class="modal-content detail-modal">
+          <h3>{{ currentBlog?.title }}</h3>
+          <div class="detail-meta">
+            <span>作者: {{ currentBlog?.author }}</span>
+            <span>字数: {{ currentBlog?.wordCount }}</span>
+            <span>{{ currentBlog?.createTime }}</span>
+          </div>
+          <p class="detail-content">{{ currentBlog?.content }}</p>
+          <div class="modal-buttons">
+            <button @click="showDetailModal = false" class="cancel-btn">关闭</button>
+          </div>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 
@@ -207,10 +286,31 @@ select {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
 
+.blog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .blog-title {
   margin: 0 0 12px 0;
   color: #333;
   font-size: 20px;
+}
+
+.delete-btn {
+  padding: 6px 14px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.delete-btn:hover {
+  background: #c82333;
 }
 
 .blog-meta {
@@ -225,5 +325,110 @@ select {
   color: #666;
   line-height: 1.8;
   margin: 0;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 32px;
+  min-width: 360px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.modal-content h3 {
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.modal-content p {
+  margin: 0 0 24px 0;
+  color: #666;
+  font-size: 15px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.cancel-btn {
+  padding: 10px 24px;
+  background: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.cancel-btn:hover {
+  background: #e0e0e0;
+}
+
+.confirm-btn {
+  padding: 10px 24px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.confirm-btn:hover {
+  background: #c82333;
+}
+
+.detail-modal {
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.detail-modal h3 {
+  margin: 0 0 16px 0;
+  color: #333;
+  font-size: 22px;
+}
+
+.detail-meta {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: #888;
+}
+
+.detail-content {
+  color: #555;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.blog-title {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.blog-title:hover {
+  color: #667eea;
 }
 </style>

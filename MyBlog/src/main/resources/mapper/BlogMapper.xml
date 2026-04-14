@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tsz.myblog.mapper.BlogMapper">
-    <resultMap id="BlogResultMap" type="com.tsz.myblog.pojo.entity.CreateBlogEntity">
+    <!--将查询到的一行行博客数据映射到BlogEntity中-->
+    <resultMap id="BlogResultMap" type="com.tsz.myblog.pojo.entity.BlogEntity">
         <id property="id" column="id"/>
         <result property="title" column="title"/>
         <result property="content" column="content"/>

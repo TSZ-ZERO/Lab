@@ -26,11 +26,22 @@ public class BlogController {
         log.info("createBlogVO: {}", createBlogVO);
         return Result.success(createBlogVO);
     }
-    //获取博客列表接口
+    /**获取博客列表接口
+     * @return List<BlogEntity>
+     */
     @GetMapping("")
     public Result getBlogList(){
         //log.info("getBlogListVO: {}", blogService.getBlogList());
         log.info("getBlogList");
         return Result.success(blogService.getBlogList());
+    }
+    /**
+     * 获取博客详情接口
+     * GET /api/blogs/id
+     */
+    @GetMapping("/{id}")
+    public Result getBlog(@PathVariable String id){
+        log.info("getBlog:{}",id);
+        return Result.success(blogService.getBlogById(id));
     }
 }

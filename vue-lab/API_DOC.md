@@ -240,6 +240,43 @@ Authorization: Bearer <token>
 
 ---
 
+### 2.4 删除博客
+
+**请求**
+
+```
+DELETE /api/blogs/:id
+Authorization: Bearer <token>
+```
+
+**路径参数说明**
+
+| 参数名 | 类型   | 必填 | 说明   |
+|--------|--------|------|--------|
+| id     | number | 是   | 博客ID |
+
+**成功响应 (200)**
+
+```json
+{
+  "code": 200,
+  "message": "删除成功",
+  "data": null
+}
+```
+
+**失败响应 (404)**
+
+```json
+{
+  "code": 404,
+  "message": "博客不存在",
+  "data": null
+}
+```
+
+---
+
 ## 3. 数据统计
 
 ### 3.1 获取统计数据
