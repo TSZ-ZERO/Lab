@@ -3,6 +3,7 @@ package com.tsz.myblog.controller;
 import com.tsz.myblog.pojo.dto.CreateBlogDTO;
 import com.tsz.myblog.pojo.result.Result;
 import com.tsz.myblog.pojo.vo.CreateBlogVO;
+import com.tsz.myblog.pojo.vo.DataVO;
 import com.tsz.myblog.service.BlogService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,5 +54,21 @@ public class BlogController {
         log.info("deleteBlog:{}",id);
         blogService.deleteBlogById(id);
         return Result.success();
+    }
+    /**
+     * 获取统计数据接口
+     * return DataVO
+     */
+    @GetMapping("/stats")
+    public Result getStats(){
+        DataVO dataVO = blogService.getBlogData();
+        return Result.success(dataVO);
+    }
+    /**
+     * 获取最近博客
+     */
+    @GetMapping("/recent")
+    public Result getRecentBlogs(){
+        return Result.success(blogService.getRecentBlogList());
     }
 }

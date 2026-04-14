@@ -12,13 +12,25 @@ const stats = ref<DashboardStats>({
 const recentBlogs = ref<any[]>([])
 const loading = ref(false)
 
+function formatDateTime(dateStr: string): string {
+  if (!dateStr) return '-'
+  if (dateStr.includes('T')) {
+    return new Date(dateStr).toLocaleDateString()
+  }
+  const match = dateStr.match(/(\d{4})-(\d{2})-(\d{2}) (\d{2})-(\d{2})-(\d{2})/)
+  if (match) {
+    return `${match[1]}-${match[2]}-${match[3]} ${match[4]}:${match[5]}:${match[6]}`
+  }
+  return dateStr
+}
+
 async function fetchDashboardData() {
   loading.value = true
   try {
     const res = await fetch('/api/blogs/stats')
     if (res.ok) {
-      const data = await res.json()
-      stats.value = data
+      const json = await res.json()
+      stats.value=json.data
     }
   } catch (e) {
     stats.value = {
@@ -34,7 +46,8 @@ async function fetchDashboardData() {
   try {
     const res = await fetch('/api/blogs/recent')
     if (res.ok) {
-      recentBlogs.value = await res.json()
+      const json = await res.json()
+      recentBlogs.value = json.data || []
     }
   } catch (e) {
     recentBlogs.value = [
@@ -78,7 +91,7 @@ onMounted(() => {
       <div class="stat-card">
         <div class="stat-icon">🕐</div>
         <div class="stat-info">
-          <span class="stat-value">{{ stats.lastUpdated ? new Date(stats.lastUpdated).toLocaleDateString() : '-' }}</span>
+          <span class="stat-value">{{ formatDateTime(stats.lastUpdated) }}</span>
           <span class="stat-label">最后更新</span>
         </div>
       </div>
@@ -93,7 +106,7 @@ onMounted(() => {
           <div class="blog-meta">
             <span>作者: {{ blog.author }}</span>
             <span>字数: {{ blog.wordCount }}</span>
-            <span>{{ blog.createTime }}</span>
+            <span>{{ formatDateTime(blog.createTime) }}</span>
           </div>
         </div>
       </div>

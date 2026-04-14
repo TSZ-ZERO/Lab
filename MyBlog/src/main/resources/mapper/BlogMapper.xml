@@ -20,4 +20,20 @@
     <select id="getBlogList" resultMap="BlogResultMap">
         SELECT * FROM blog;
     </select>
+    <select id="getBlogData" resultType="java.util.HashMap">
+        SELECT
+            COUNT(*) AS totalBlogs,
+            SUM(word_count) AS totalWords,
+            AVG(word_count) AS avgWordsPerBlog,
+            MAX(create_time) AS lastUpdated
+        FROM blog;
+    </select>
+    <!--DATE_SUB(NOW(), INTERVAL 7 DAY)：计算当前时间往前推 7 天的时间点
+        WHERE create_time >= ...：筛选创建时间大于等于 7 天前的博客（即一周内的博客）
+        ORDER BY create_time DESC：按创建时间降序排列，最新的博客排在前面-->
+    <select id="getRecentBlogList" resultMap="BlogResultMap">
+        SELECT * FROM blog
+        WHERE create_time >= DATE_SUB(NOW(), INTERVAL 7 DAY)
+        ORDER BY create_time DESC;
+    </select>
 </mapper>
