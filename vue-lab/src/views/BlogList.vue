@@ -59,6 +59,11 @@ const sortedBlogs = computed(() => {
   return result
 })
 
+function truncateContent(content: string, maxLength: number = 100): string {
+  if (!content || content.length <= maxLength) return content || ''
+  return content.substring(0, maxLength) + '...'
+}
+
 async function fetchBlogs() {
   loading.value = true
   try {
@@ -155,7 +160,7 @@ onMounted(() => {
           <span>字数: {{ blog.wordCount }}</span>
           <span>{{ blog.createTime }}</span>
         </div>
-        <p class="blog-content">{{ blog.content }}</p>
+        <p class="blog-content">{{ truncateContent(blog.content) }}</p>
       </div>
     </div>
 
@@ -398,8 +403,9 @@ select {
 }
 
 .detail-modal {
-  max-width: 600px;
-  max-height: 80vh;
+  width: 90%;
+  max-width: 800px;
+  max-height: 85vh;
   overflow-y: auto;
 }
 

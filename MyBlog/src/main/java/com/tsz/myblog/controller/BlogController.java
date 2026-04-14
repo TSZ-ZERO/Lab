@@ -44,4 +44,14 @@ public class BlogController {
         log.info("getBlog:{}",id);
         return Result.success(blogService.getBlogById(id));
     }
+    /**
+     * 删除博客接口
+     * DELETE /api/blogs/id
+     */
+    @DeleteMapping("/{id}")
+    public Result deleteBlog(@PathVariable String id){
+        log.info("deleteBlog:{}",id);
+        blogService.deleteBlogById(id);
+        return Result.success();
+    }
 }

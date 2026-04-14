@@ -13,4 +13,6 @@ public interface BlogService {
     List<BlogEntity> getBlogList();
 
     BlogEntity getBlogById(String id);
+
+    void deleteBlogById(String id);
 }
